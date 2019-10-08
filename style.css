@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+main {
+  margin: 0 15px;
+  padding: 30px 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  margin: 15px 0;
+}
+
+.button {
+  margin: 15px;
+}
+
+#js-search-term {
+  width: 280px;
+}
