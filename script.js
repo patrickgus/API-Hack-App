@@ -9,12 +9,12 @@ function formatQueryParams {
 
 function displayResults {
   // displays the results of the search with links to the artist or song
+  // displays "No results found, Please try another search" if no results are found
 
 }
 
 function getArtistsOrSongs {
   // uses API to get the name of the artist or song 
-  // displays nothing if no results are found
 
 }
 
