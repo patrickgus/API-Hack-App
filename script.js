@@ -16,7 +16,7 @@ function formatQueryParams(params) {
 function displaySearchResults(responseJson) {
   // displays the results of the search with links to the artist or song
   // displays "No results found, Please try another search" if no results are found
-  console.log('`displaySearchResults` is running')
+  console.log('`displaySearchResults` is running');
   console.log(responseJson);
 
   $('#results-list').empty();
@@ -28,15 +28,18 @@ function displaySearchResults(responseJson) {
 
     $('#js-error-message').text('No results found. Please try another search.');
   } else {
-    for (let i = 0; i < responseJson.results.trackmatches.track.length; i++){
+    responseJson.results.trackmatches.track.forEach(function(track) {
+      console.log('track', track);
+
       $('#js-error-message').hide();
 
-      $('#results-list').append(`
-        <li><a href='/'>${responseJson.results.trackmatches.track[i].name}</a> - ${responseJson.results.trackmatches.track[i].artist}</li>`
-      )};
-      
+      $('#results-list').append(
+        `<li><a href='javascript:console.log("${track.name}")'>${track.name}</a> - ${track.artist}</li>`
+      );
+    });
+
     $('#results').show();
-  };
+  }
 }
 
 function getArtistOrSongs(query) {
@@ -48,7 +51,7 @@ function getArtistOrSongs(query) {
     track: query,
     api_key: apiKey,
     format: 'json'
-  }; 
+  };
   const queryString = formatQueryParams(params);
   const url = lastFmSearchUrl + '?' + queryString;
 
