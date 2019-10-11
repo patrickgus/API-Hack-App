@@ -21,12 +21,22 @@ function displaySearchResults(responseJson) {
 
   $('#results-list').empty();
 
-  for (let i = 0; i < responseJson.results.trackmatches.track.length; i++){
-    $('#results-list').append(`
-      <li><a href='/'>${responseJson.results.trackmatches.track[i].name}</a> - ${responseJson.results.trackmatches.track[i].artist}</li>`
-    )};
-  
-  $('#results').removeClass('hidden');
+  if (responseJson.results.trackmatches.track.length === 0) {
+    $('#js-error-message').show();
+
+    $('#results').hide();
+
+    $('#js-error-message').text('No results found. Please try another search.');
+  } else {
+    for (let i = 0; i < responseJson.results.trackmatches.track.length; i++){
+      $('#js-error-message').hide();
+
+      $('#results-list').append(`
+        <li><a href='/'>${responseJson.results.trackmatches.track[i].name}</a> - ${responseJson.results.trackmatches.track[i].artist}</li>`
+      )};
+      
+    $('#results').show();
+  };
 }
 
 function getArtistOrSongs(query) {
