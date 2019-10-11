@@ -36,6 +36,10 @@ label {
   margin: 15px;
 }
 
+.hidden {
+  display: none;
+}
+
 #js-search-term {
   width: 280px;
 }
