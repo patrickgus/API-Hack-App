@@ -16,7 +16,17 @@ function formatQueryParams(params) {
 function displaySearchResults() {
   // displays the results of the search with links to the artist or song
   // displays "No results found, Please try another search" if no results are found
+  console.log('`displaySearchResults` is running')
+  console.log(responseJson);
 
+  $('#results-list').empty();
+
+  for (let i = 0; i < responseJson.results.trackmatches.track.length; i++){
+    $('#results-list').append(`
+      <li><a href='/'>${responseJson.results.trackmatches.track[i].name}</a> - ${responseJson.results.trackmatches.track[i].artist}</li>`
+    )};
+  
+  $('#results').removeClass('hidden');
 }
 
 function getArtistOrSongs(query) {
