@@ -13,7 +13,7 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
-function displaySearchResults() {
+function displaySearchResults(responseJson) {
   // displays the results of the search with links to the artist or song
   // displays "No results found, Please try another search" if no results are found
   console.log('`displaySearchResults` is running')
@@ -40,7 +40,7 @@ function getArtistOrSongs(query) {
     format: 'json'
   }; 
   const queryString = formatQueryParams(params);
-  const url = lastFmSearchUrl + '?' + trackQueryString;
+  const url = lastFmSearchUrl + '?' + queryString;
 
   console.log(url);
 
