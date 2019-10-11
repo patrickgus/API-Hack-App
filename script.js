@@ -37,6 +37,8 @@ function displaySearchResults(responseJson) {
       
     $('#results').show();
   };
+
+  
 }
 
 function getArtistOrSongs(query) {
