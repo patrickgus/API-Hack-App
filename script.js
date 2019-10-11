@@ -6,7 +6,11 @@ const lyricsSearchUrl = 'https://api.lyrics.ovh/v1/';
 
 function formatQueryParams(params) {
   // format the query parameters to make API call
-  
+  console.log(`formatQueryParams is running`);
+
+  const queryItems = Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
+
+  return queryItems.join('&');
 }
 
 function displaySearchResults() {
