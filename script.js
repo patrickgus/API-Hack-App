@@ -3,6 +3,7 @@
 const apiKey = '52c6dff4ea5e83aba69fe752999caa2c';
 const lastFmSearchUrl = 'http://ws.audioscrobbler.com/2.0/';
 const lyricsSearchUrl = 'https://api.lyrics.ovh/v1/';
+let startPage = 1;
 
 function formatQueryParams(params) {
   // format the query parameters to make API call
@@ -25,6 +26,14 @@ function displayMoreSearchResults(responseJson) {
   $('#more-results').show();
 }
 
+function increasePageNumber() { 
+  console.log('`increasePageNumber` is running');
+
+  startPage++;
+
+  return startPage;
+}  
+
 function getMoreResults() {
   $('#more-results').on('click', event => {
     console.log('`getMoreResults` is running');
@@ -34,7 +43,7 @@ function getMoreResults() {
       track: $('#js-search-term').val(),
       api_key: apiKey,
       format: 'json',
-      page: responseJson.results['opensearch:Query'].startPage++
+      page: increasePageNumber()
     };
     const queryString = formatQueryParams(params);
     const url = lastFmSearchUrl + '?' + queryString;
