@@ -21,10 +21,12 @@ function displaySearchResults(responseJson) {
 
   $('#results-list').empty();
 
-  if (responseJson.results.trackmatches.track.length === 0) {
+  if (responseJson.results['opensearch:totalResults'] === '0') {
     $('#js-error-message').show();
 
     $('#results').hide();
+
+    $('#more-results').hide();
 
     $('#js-error-message').text('No results found. Please try another search.');
   } else {
@@ -34,11 +36,13 @@ function displaySearchResults(responseJson) {
       $('#js-error-message').hide();
 
       $('#results-list').append(
-        `<li><a href='javascript:console.log("${track.name}")'>${track.name}</a> - ${track.artist}</li>`
+        `<li><a href="javascript:console.log("${track.name}")">${track.name}</a> - ${track.artist}</li>`
       );
     });
 
     $('#results').show();
+
+    $('#more-results').show();
   }
 }
 
