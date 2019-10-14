@@ -17,6 +17,12 @@ h1 {
   font-weight: bold;
 }
 
+h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
 main {
   margin: 0 15px;
   padding: 30px 0;
@@ -32,6 +38,10 @@ label {
   margin: 15px 0;
 }
 
+ul {
+  line-height: 1.5;;
+}
+
 .button {
   margin: 15px;
 }
@@ -42,4 +52,8 @@ label {
 
 #js-search-term {
   width: 280px;
+}
+
+#more-results {
+  margin-top: 10px;
 }
