@@ -26,13 +26,13 @@ function displayMoreSearchResults(responseJson) {
   $('#more-results').show();
 }
 
-function increasePageNumber() { 
+function increasePageNumber() {
   console.log('`increasePageNumber` is running');
 
   startPage++;
 
   return startPage;
-}  
+}
 
 function getMoreResults() {
   $('#more-results').on('click', event => {
@@ -47,9 +47,9 @@ function getMoreResults() {
     };
     const queryString = formatQueryParams(params);
     const url = lastFmSearchUrl + '?' + queryString;
-  
+
     console.log(url);
-  
+
     fetch(url)
       .then(response => {
         if (response.ok) {
