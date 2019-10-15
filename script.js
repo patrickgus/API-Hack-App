@@ -101,11 +101,14 @@ function getArtistOrSongs(query) {
   // uses API to get the name of the artist or song
   console.log(`getArtistOrSong is running`);
 
+  const startPage = 1;
+
   const params = {
     method: 'track.search',
     track: query,
     api_key: apiKey,
-    format: 'json'
+    format: 'json',
+    page: startPage
   };
   const queryString = formatQueryParams(params);
   const url = lastFmSearchUrl + '?' + queryString;
