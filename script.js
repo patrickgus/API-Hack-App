@@ -14,12 +14,54 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
+function displayLyrics(responseJson) {
+  console.log('`displayLyrics` is running');
+
+  console.log(responseJson);
+
+  $('#results-list').empty();
+
+  if (responseJson.error === 'No lyrics found') {
+    $('#js-error-message').show();
+
+    $('#results').hide();
+
+    $('#more-results').hide();
+
+    $('#js-error-message').text('No results found. Please try another search.');
+  } else {
+    $('#more-results').hide();
+
+    $('#results-list').append(`<p class="lyrics">${responseJson.lyrics}</p>`);
+  }
+}
+
+function getLyrics(artist, title) {
+  console.log(`getLyrics is running`);
+
+  const url = lyricsSearchUrl + artist + '/' + title;
+
+  console.log(url);
+
+  fetch(url)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(response.statusText);
+    })
+    .then(responseJson => displayLyrics(responseJson))
+    .catch(err => {
+      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+    });
+}
+
 function displayMoreSearchResults(responseJson) {
   console.log('`displayMoreSearchResults` is running');
 
   responseJson.results.trackmatches.track.forEach(function(track) {
     $('#results-list').append(
-      `<li><a href="javascript:console.log("${track.name}")">${track.name}</a> - ${track.artist}</li>`
+      `<li><a href="javascript:getLyrics('${encodeURIComponent(track.artist)}', '${encodeURIComponent(track.name)}')">${track.name}</a> - ${track.artist}</li>`
     );
   });
 
@@ -85,7 +127,7 @@ function displaySearchResults(responseJson) {
       $('#js-error-message').hide();
 
       $('#results-list').append(
-        `<li><a href="javascript:console.log("${track.name}")">${track.name}</a> - ${track.artist}</li>`
+        `<li><a href="javascript:getLyrics('${encodeURIComponent(track.artist)}', '${encodeURIComponent(track.name)}');">${track.name}</a> - ${track.artist}</li>`
       );
     });
 
