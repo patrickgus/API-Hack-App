@@ -3,7 +3,7 @@
 const apiKey = '52c6dff4ea5e83aba69fe752999caa2c';
 const lastFmSearchUrl = 'http://ws.audioscrobbler.com/2.0/';
 const lyricsSearchUrl = 'https://api.lyrics.ovh/v1/';
-let startPage = 1;
+// let startPage = 1;
 
 function formatQueryParams(params) {
   // format the query parameters to make API call
@@ -14,63 +14,41 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
-function displayMoreSearchResults(responseJson) {
-  console.log('`displayMoreSearchResults` is running');
+// function displayMoreSearchResults(responseJson) {
+//   console.log('`displayMoreSearchResults` is running');
 
-  responseJson.results.trackmatches.track.forEach(function(track) {
-    $('#results-list').append(
-      `<li><a href="javascript:console.log("${track.name}")">${track.name}</a> - ${track.artist}</li>`
-    );
-  });
+//   responseJson.results.trackmatches.track.forEach(function(track) {
+//     $('#results-list').append(
+//       `<li><a href="javascript:console.log("${track.name}")">${track.name}</a> - ${track.artist}</li>`
+//     );
+//   });
 
-  $('#more-results').show();
-}
+//   $('#more-results').show();
+// }
 
-function increasePageNumber() {
-  console.log('`increasePageNumber` is running');
+// function increasePageNumber() {
+//   console.log('`increasePageNumber` is running');
 
-  startPage++;
+//   startPage++;
 
-  return startPage;
-}
+//   return startPage;
+// }
 
-function getMoreResults() {
+function getMoreResults(query, page) {
   $('#more-results').on('click', event => {
     console.log('`getMoreResults` is running');
 
-    const params = {
-      method: 'track.search',
-      track: $('#js-search-term').val(),
-      api_key: apiKey,
-      format: 'json',
-      page: increasePageNumber()
-    };
-    const queryString = formatQueryParams(params);
-    const url = lastFmSearchUrl + '?' + queryString;
-
-    console.log(url);
-
-    fetch(url)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error(response.statusText);
-      })
-      .then(responseJson => displayMoreSearchResults(responseJson))
-      .catch(err => {
-        $('#js-error-message').text(`Something went wrong: ${err.message}`);
-      });
+    getArtistOrSongs(query, page++);
   });
 }
 
-function displaySearchResults(responseJson) {
+function displaySearchResults(responseJson, query, page) {
   // displays the results of the search with links to the artist or song
   // displays "No results found, Please try another search" if no results are found
   console.log('`displaySearchResults` is running');
   console.log(responseJson);
 
-  $('#results-list').empty();
+  
 
   if (responseJson.results['opensearch:totalResults'] === '0') {
     $('#js-error-message').show();
@@ -93,22 +71,20 @@ function displaySearchResults(responseJson) {
 
     $('#more-results').show();
 
-    getMoreResults();
+    getMoreResults(query, page);
   }
 }
 
-function getArtistOrSongs(query) {
+function getArtistOrSongs(query, page) {
   // uses API to get the name of the artist or song
-  console.log(`getArtistOrSong is running`);
-
-  const startPage = 1;
+  console.log(`getArtistOrSong is running, page:${page}`);
 
   const params = {
     method: 'track.search',
     track: query,
     api_key: apiKey,
     format: 'json',
-    page: startPage
+    page: page
   };
   const queryString = formatQueryParams(params);
   const url = lastFmSearchUrl + '?' + queryString;
@@ -122,7 +98,7 @@ function getArtistOrSongs(query) {
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson => displaySearchResults(responseJson))
+    .then(responseJson => displaySearchResults(responseJson, query, page))
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
@@ -136,7 +112,9 @@ function watchForm() {
 
     const searchTerm = $('#js-search-term').val();
 
-    getArtistOrSongs(searchTerm);
+    $('#results-list').empty();
+
+    getArtistOrSongs(searchTerm, 1);
   });
 }
 
