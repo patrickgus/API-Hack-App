@@ -29,9 +29,13 @@ function displayResults(responseJson) {
         `<li><a href="javascript:console.log("${track.name}")">${track.name}</a> - ${track.artist}</li>`
       );
     });
-
     $('#js-results').show();
-    $('#js-more-results').show();
+
+    if (responseJson.results['opensearch:totalResults'] < 30) {
+      $('#js-more-results').hide();
+    } else {
+      $('#js-more-results').show();
+    }
   }
 }
 
