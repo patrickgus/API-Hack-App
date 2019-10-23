@@ -12,8 +12,27 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
-function displayResults(results) {
-  console.log(results);
+function displayResults(responseJson) {
+  console.log(responseJson);
+
+  if (responseJson.results['opensearch:totalResults'] === '0') {
+    $('#js-error-message').show();
+    $('#js-results').hide();
+    $('#js-more-results').hide();
+
+    $('#js-error-message').text('No results found. Please try another search.');
+  } else {
+    responseJson.results.trackmatches.track.forEach(track => {
+      $('#js-error-message').hide();
+
+      $('#js-results-list').append(
+        `<li><a href="javascript:console.log("${track.name}")">${track.name}</a> - ${track.artist}</li>`
+      );
+    });
+
+    $('#js-results').show();
+    $('#js-more-results').show();
+  }
 }
 
 function getResults(query, page) {
