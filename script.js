@@ -3,7 +3,6 @@
 const apiKey = '52c6dff4ea5e83aba69fe752999caa2c';
 const lastFmSearchUrl = 'http://ws.audioscrobbler.com/2.0/';
 const lyricsSearchUrl = 'https://api.lyrics.ovh/v1/';
-// const query = $('#js-search-term').val();
 let page = 1;
 
 function formatQueryParams(params) {
@@ -25,9 +24,7 @@ function displayResults(responseJson) {
     responseJson.results.trackmatches.track.forEach(track => {
       $('#js-error-message').hide();
 
-      $('#js-results-list').append(
-        `<li><a href="javascript:console.log("${track.name}")">${track.name}</a> - ${track.artist}</li>`
-      );
+      $('#js-results-list').append(`<li><a href="javascript:console.log("${track.name}")">${track.name}</a> - ${track.artist}</li>`);
     });
     $('#js-results').show();
 
@@ -76,15 +73,13 @@ function handleLoadMore() {
 function handleSearch() {
   $('form').submit(event => {
     event.preventDefault();
-
+    
     $('#js-results-list').empty();
 
     const searchTerm = $('#js-search-term').val();
-    // const results = getResults(searchTerm, 1);
     page = 1;
 
     getResults(searchTerm, page);
-    // displayResults(results);
   });
 }
 
