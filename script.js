@@ -27,12 +27,12 @@ function displayLyrics(responseJson) {
   } else {
     $('#js-more-results').hide();
 
-    $('#js-results-list').append(`<p class="lyrics">${responseJson.lyrics}</p>`);
+    $('#js-results-list').append(`<p class="lyrics">${responseJson.lyrics}</p><a id="back-to-results" href="">Back to results</a>`);
   }
 }
 
 function getLyrics(artist, title) {
-  const url = lyricsSearchUrl + artist + '/' + title;
+  const url = lyricsSearchUrl + encodeURIComponent(artist) + '/' + encodeURIComponent(title);
 
   console.log(url);
 
@@ -65,7 +65,7 @@ function displayResults(responseJson) {
       $('#js-error-message').hide();
 
       $('#js-results-list').append(
-        `<li><a href="javascript:getLyrics('${encodeURIComponent(track.artist)}', '${encodeURIComponent(track.name)}')">${track.name}</a> - ${track.artist}</li>`
+        `<li><a href="javascript:getLyrics('${track.artist}', '${track.name}')">${track.name}</a> - ${track.artist}</li>`
       );
     });
 
