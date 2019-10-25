@@ -42,6 +42,10 @@ ul {
   line-height: 1.5;
 }
 
+button {
+  margin-top: 10px;
+}
+
 .button {
   margin: 15px;
 }
@@ -54,6 +58,6 @@ ul {
   width: 280px;
 }
 
-#js-more-results {
-  margin-top: 10px;
+#js-lyrics {
+  line-height: 1.5;
 }
