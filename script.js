@@ -32,11 +32,11 @@ function displayLyrics(responseJson) {
 }
 
 function getLyrics(artist, title) {
-  const url = lyricsSearchUrl + encodeURIComponent(artist) + '/' + encodeURIComponent(title);
+  const url = lyricsSearchUrl + artist + '/' + title;
 
   console.log(url);
 
-  fetch(url)
+  fetch(fixedEncodeURIComponent(url))
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -47,6 +47,12 @@ function getLyrics(artist, title) {
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
+}
+
+function fixedEncodeURIComponent(str) {
+  return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+    return '%' + c.charCodeAt(0).toString(16);
+  });
 }
 
 function displayResults(responseJson) {
@@ -65,7 +71,7 @@ function displayResults(responseJson) {
       $('#js-error-message').hide();
 
       $('#js-results-list').append(
-        `<li><a href="javascript:getLyrics('${track.artist}', '${track.name}')">${track.name}</a> - ${track.artist}</li>`
+        `<li><a href="javascript:getLyrics('${fixedEncodeURIComponent(track.artist)}', '${fixedEncodeURIComponent(track.name)}')">${track.name}</a> - ${track.artist}</li>`
       );
     });
 
