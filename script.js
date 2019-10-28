@@ -12,14 +12,14 @@ function formatQueryParams(params) {
 }
 
 function handleBackToResults() {
-  $('#back-to-results').click( event => {
+  $('#back-to-results').click(event => {
     $('#js-lyrics').hide();
 
     $('#js-results').show();
   });
 }
 
-function displayLyrics(responseJson) {
+function displayLyrics(responseJson, index) {
   console.log(responseJson);
 
   $('#js-results').hide();
@@ -33,15 +33,17 @@ function displayLyrics(responseJson) {
 
     $('#js-error-message').text('No lyrics found.');
   } else {
-    $('#js-lyrics').append(`<p class="lyrics">${responseJson.lyrics}</p>`);
+    $('#js-lyrics').append(
+      `<h3>${STORE.tracks[index].name} - ${STORE.tracks[index].artist}</h3><p class="lyrics">${responseJson.lyrics.replace(/\n/g, '<br>')}</p>`
+    );
   }
   $('#js-lyrics').append('<button id="back-to-results">Back to results</button>');
 
   handleBackToResults();
 }
 
-function getLyrics(artist, title) {
-  const url = lyricsSearchUrl + encodeURIComponent(artist) + '/' + encodeURIComponent(title);
+function getLyrics(index) {
+  const url = lyricsSearchUrl + fixedEncodeURIComponent(STORE.tracks[index].artist) + '/' + fixedEncodeURIComponent(STORE.tracks[index].name);
 
   console.log(url);
 
@@ -52,44 +54,49 @@ function getLyrics(artist, title) {
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson => displayLyrics(responseJson))
+    .then(responseJson => displayLyrics(responseJson, index))
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
 }
 
-// function fixedEncodeURIComponent(str) {
-//   return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
-//     return '%' + c.charCodeAt(0).toString(16);
-//   });
-// }
+function fixedEncodeURIComponent(str) {
+  return encodeURIComponent(str.replace(/[!'\/()*]/g, ''));
+}
 
-function displayResults(responseJson) {
-  console.log(responseJson);
+function displayResults() {
+  console.log(STORE);
 
-  if (responseJson.results['opensearch:totalResults'] === '0') {
+  if (STORE.tracks.length) {
+    STORE.tracks.forEach((track, index) => {
+      $('#js-error-message').hide();
+
+      $('#js-results-list').append(`<li><a href="javascript:getLyrics(${index})">${track.name}</a> - ${track.artist}</li>`);
+    });
+
+    $('#js-results').show();
+  } else {
     $('#js-error-message').show();
 
     $('#js-results').hide();
 
     $('#js-error-message').text('No results found. Please try another search.');
-  } else {
-    responseJson.results.trackmatches.track.forEach(track => {
-      $('#js-error-message').hide();
-
-      $('#js-results-list').append(
-        `<li><a href="javascript:getLyrics('${track.artist}', '${track.name}')">${track.name}</a> - ${track.artist}</li>`
-      );
-    });
-
-    $('#js-results').show();
-
-    if (responseJson.results['opensearch:totalResults'] < 30) {
-      $('#js-more-results').hide();
-    } else {
-      $('#js-more-results').show();
-    }
   }
+
+  if (STORE.tracks.length < 30) {
+    $('#js-more-results').hide();
+  } else {
+    $('#js-more-results').show();
+  }
+}
+
+async function storeResults(responseJson) {
+  return await responseJson.results.trackmatches.track.forEach(track => {
+    STORE.tracks.push({
+      name: track.name,
+      artist: track.artist
+    });
+  });
 }
 
 function getResults(query, page) {
@@ -112,7 +119,8 @@ function getResults(query, page) {
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson => displayResults(responseJson))
+    .then(responseJson => storeResults(responseJson))
+    .then(() => displayResults())
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
@@ -130,6 +138,7 @@ function handleSearch() {
   $('form').submit(event => {
     event.preventDefault();
 
+    STORE.tracks.length = 0;
     $('#js-results-list').empty();
 
     const searchTerm = $('#js-search-term').val();
