@@ -13,6 +13,13 @@ function formatQueryParams(params) {
 
 function displaySimilarArtists(responseJson) {
   console.log(responseJson);
+  $('#js-similar-artists').show();
+
+  responseJson.similarartists.artist.forEach(artist => {
+    $('#js-similar-artists-list').append(
+      `<li><a href="javascript:getResults('${artist.name}', 1);$('#js-results-list').empty()">${artist.name}</a>`
+    );
+  });
 }
 
 function getSimilarArtists(index) {
@@ -45,6 +52,8 @@ function handleBackToResults() {
   $('#back-to-results').click(event => {
     $('#js-lyrics').hide();
 
+    $('#js-similar-artists').hide();
+
     $('#js-results').show();
   });
 }
@@ -57,6 +66,8 @@ function displayLyrics(responseJson, index) {
   $('#js-lyrics').show();
 
   $('#js-lyrics').empty();
+
+  $('#js-similar-artists-list').empty();
 
   if (responseJson.error === 'No lyrics found') {
     $('#js-error-message').show();
@@ -99,6 +110,8 @@ function fixedEncodeURIComponent(str) {
 
 function displayResults() {
   console.log(STORE);
+  $('#js-lyrics').empty();
+  $('#js-similar-artists').hide();
 
   if (STORE.tracks.length) {
     STORE.tracks.forEach((track, index) => {
@@ -106,7 +119,6 @@ function displayResults() {
 
       $('#js-results-list').append(`<li><a href="javascript:getLyrics(${index})">${track.name}</a> - ${track.artist}</li>`);
     });
-    $('#js-results').show();
 
     $('#js-results').show();
   } else {
@@ -176,7 +188,6 @@ function handleSearch() {
 
     STORE.tracks.length = 0;
     $('#js-results-list').empty();
-    $('#js-lyrics').empty();
 
     const searchTerm = $('#js-search-term').val();
     page = 1;
