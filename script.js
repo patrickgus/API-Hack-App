@@ -55,6 +55,10 @@ function handleBackToResults() {
     $('#js-similar-artists').hide();
 
     $('#js-results').show();
+
+    $('html, body').animate({
+      scrollTop: $('#js-more-results').offset().top
+    }, 800);
   });
 }
 
@@ -68,6 +72,10 @@ function displayLyrics(responseJson, index) {
   $('#js-lyrics').empty();
 
   $('#js-similar-artists-list').empty();
+
+  $('html, body').animate({
+    scrollTop: $('#js-lyrics').offset().top
+  }, 800);
 
   if (responseJson.error === 'No lyrics found') {
     $('#js-error-message').show();
