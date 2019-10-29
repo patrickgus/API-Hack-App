@@ -94,7 +94,7 @@ function getLyrics(index) {
 }
 
 function fixedEncodeURIComponent(str) {
-  return encodeURIComponent(str.replace(/[!'\/*]/g, ''));
+  return encodeURIComponent(str.replace(/['\/*]/g, ''));
 }
 
 function displayResults() {
