@@ -11,6 +11,36 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
+function displaySimilarArtists(responseJson) {
+  console.log(responseJson);
+}
+
+function getSimilarArtists(index) {
+  const params = {
+    method: 'artist.getsimilar',
+    artist: STORE.tracks[index].artist,
+    api_key: apiKey,
+    format: 'json',
+    limit: 5
+  };
+  const queryString = formatQueryParams(params);
+  const url = lastFmSearchUrl + '?' + queryString;
+
+  console.log(url);
+
+  fetch(url)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(response.statusText);
+    })
+    .then(responseJson => displaySimilarArtists(responseJson))
+    .catch(err => {
+      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+    });
+}
+
 function handleBackToResults() {
   $('#back-to-results').click(event => {
     $('#js-lyrics').hide();
@@ -41,6 +71,7 @@ function displayLyrics(responseJson, index) {
   $('#js-lyrics').append('<button id="back-to-results">Back to results</button>');
 
   handleBackToResults();
+  getSimilarArtists(index);
 }
 
 function getLyrics(index) {
@@ -56,6 +87,7 @@ function getLyrics(index) {
       throw new Error(response.statusText);
     })
     .then(responseJson => displayLyrics(responseJson, index))
+    // .then(index => getSimilarArtists(index))
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
