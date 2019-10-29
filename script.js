@@ -1,7 +1,7 @@
 'use scrict';
 
 const apiKey = '52c6dff4ea5e83aba69fe752999caa2c';
-const lastFmSearchUrl = 'http://ws.audioscrobbler.com/2.0/';
+const lastFmSearchUrl = 'https://ws.audioscrobbler.com/2.0/';
 const lyricsSearchUrl = 'https://api.lyrics.ovh/v1/';
 let page = 1;
 
@@ -105,7 +105,7 @@ function getLyrics(index) {
 }
 
 function fixedEncodeURIComponent(str) {
-  return encodeURIComponent(str.replace(/['\/*]/g, ''));
+  return encodeURIComponent(str.replace(/['\/*?]/g, ''));
 }
 
 function displayResults() {
