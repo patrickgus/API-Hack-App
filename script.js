@@ -61,7 +61,7 @@ function getLyrics(index) {
 }
 
 function fixedEncodeURIComponent(str) {
-  return encodeURIComponent(str.replace(/[!'\/()*]/g, ''));
+  return encodeURIComponent(str.replace(/[!'\/*]/g, ''));
 }
 
 function displayResults() {
@@ -91,6 +91,8 @@ function displayResults() {
 }
 
 async function storeResults(responseJson) {
+  STORE.tracks = [];
+
   return await responseJson.results.trackmatches.track.forEach(track => {
     STORE.tracks.push({
       name: track.name,
@@ -127,7 +129,7 @@ function getResults(query, page) {
 }
 
 function handleLoadMore() {
-  $('#js-more-results').on('click', event => {
+  $('#js-more-results').click(event => {
     const query = $('#js-search-term').val();
 
     getResults(query, ++page);
