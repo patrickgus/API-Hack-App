@@ -34,7 +34,8 @@ function displayLyrics(responseJson, index) {
     $('#js-error-message').text('No lyrics found.');
   } else {
     $('#js-lyrics').append(
-      `<h3>${STORE.tracks[index].name} - ${STORE.tracks[index].artist}</h3><p class="lyrics">${responseJson.lyrics.replace(/\n/g, '<br>')}</p>`
+      `<h3>${STORE.tracks[index].name} - ${STORE.tracks[index].artist}</h3>
+        <p class="lyrics">${responseJson.lyrics.replace(/\n/g, '<br>')}</p>`
     );
   }
   $('#js-lyrics').append('<button id="back-to-results">Back to results</button>');
@@ -92,7 +93,7 @@ function displayResults() {
 }
 
 async function storeResults(responseJson) {
-  STORE.tracks = [];
+  STORE.tracks.length = 0;
 
   return await responseJson.results.trackmatches.track.forEach(track => {
     STORE.tracks.push({
@@ -140,11 +141,10 @@ function handleLoadMore() {
 function handleSearch() {
   $('form').submit(event => {
     event.preventDefault();
-    
-    $('#js-results-list').empty();
 
     STORE.tracks.length = 0;
     $('#js-results-list').empty();
+    $('#js-lyrics').empty();
 
     const searchTerm = $('#js-search-term').val();
     page = 1;
