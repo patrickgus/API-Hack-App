@@ -17,8 +17,23 @@ function displaySimilarArtists(responseJson) {
 
   responseJson.similarartists.artist.forEach(artist => {
     $('#js-similar-artists-list').append(
-      `<li><a href="javascript:getResults('${artist.name}', 1);$('#js-results-list').empty();$('#js-search-term').val('${artist.name}');
-      page=1;$('html, body').animate({scrollTop: $('body').offset().top}, 1200);">${artist.name}</a>`
+      `<li><a href="javascript:
+      $('#js-results-list').empty();
+      $('#js-search-term').val('${artist.name}');
+      
+      STORE.tracks = [];
+      page=1;
+      
+      $('html, body').animate({
+        scrollTop: $('body').offset().top
+      }, 1200);
+  
+      getResults('${artist.name}', page)
+        .then(responseJson => {
+          const startIndex = storeResults(responseJson.results.trackmatches.track);
+          displayResults(responseJson.results.trackmatches.track, startIndex);
+        });">
+      ${artist.name}</a></li>`
     );
   });
 }
@@ -117,16 +132,16 @@ function fixedEncodeURIComponent(str) {
   return encodeURIComponent(str.replace(/['\/*?]/g, ''));
 }
 
-function displayResults() {
+function displayResults(results, startIndex) {
   console.log(STORE);
   $('#js-lyrics').empty();
   $('#js-similar-artists').hide();
 
-  if (STORE.tracks.length) {
-    STORE.tracks.forEach((track, index) => {
+  if (results.length) {
+    results.forEach((track, index) => {
       $('#js-error-message').hide();
 
-      $('#js-results-list').append(`<li><a href="javascript:getLyrics(${index})">${track.name}</a> - ${track.artist}</li>`);
+      $('#js-results-list').append(`<li><a href="javascript:getLyrics(${index+startIndex})">${track.name}</a> - ${track.artist}</li>`);
     });
 
     $('#js-results').show();
@@ -138,22 +153,23 @@ function displayResults() {
     $('#js-error-message').text('No results found. Please try another search.');
   }
 
-  if (STORE.tracks.length < 30) {
+  if (results.length < 30) {
     $('#js-more-results').hide();
   } else {
     $('#js-more-results').show();
   }
 }
 
-async function storeResults(responseJson) {
-  STORE.tracks.length = 0;
+function storeResults(results) {
+  const startIndex = STORE.tracks.length
 
-  return await responseJson.results.trackmatches.track.forEach(track => {
+  results.forEach(track => {
     STORE.tracks.push({
       name: track.name,
       artist: track.artist
     });
   });
+  return startIndex;
 }
 
 function getResults(query, page) {
@@ -169,25 +185,46 @@ function getResults(query, page) {
 
   console.log(url);
 
-  fetch(url)
+  return fetch(url)
     .then(response => {
       if (response.ok) {
         return response.json();
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson => storeResults(responseJson))
-    .then(() => displayResults())
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
 }
 
+// function handleSeeLyrics() {
+//   $('#js-see-lyrics').click(event => {
+//     $('#js-results-list').empty();
+//     $('#js-search-term').val('${artist.name}');
+    
+//     page=1;
+    
+//     $('html, body').animate({
+//       scrollTop: $('body').offset().top
+//     }, 1200);
+
+//     getResults(query, page)
+//       .then(responseJson => {
+//         const startIndex = storeResults(responseJson.results.trackmatches.track);
+//         displayResults(responseJson.results.trackmatches.track, startIndex);
+//       });
+//   });
+// }
+
 function handleLoadMore() {
   $('#js-more-results').click(event => {
     const query = $('#js-search-term').val();
 
-    getResults(query, ++page);
+    getResults(query, ++page)
+      .then(responseJson => {
+        const startIndex = storeResults(responseJson.results.trackmatches.track);
+        displayResults(responseJson.results.trackmatches.track, startIndex);
+      });     
   });
 }
 
@@ -196,11 +233,15 @@ function handleSearch() {
     event.preventDefault();
 
     $('#js-results-list').empty();
-    STORE.tracks.length = 0;
+    STORE.tracks = [];
     page = 1;
     const searchTerm = $('#js-search-term').val();
 
-    getResults(searchTerm, page);
+    getResults(searchTerm, page)
+      .then(responseJson => {
+        const startIndex = storeResults(responseJson.results.trackmatches.track);
+        displayResults(responseJson.results.trackmatches.track, startIndex);
+      }); 
   });
 }
 
