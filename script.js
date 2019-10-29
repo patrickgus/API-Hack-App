@@ -122,7 +122,6 @@ function getLyrics(index) {
       throw new Error(response.statusText);
     })
     .then(responseJson => displayLyrics(responseJson, index))
-    // .then(index => getSimilarArtists(index))
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
@@ -196,25 +195,6 @@ function getResults(query, page) {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
 }
-
-// function handleSeeLyrics() {
-//   $('#js-see-lyrics').click(event => {
-//     $('#js-results-list').empty();
-//     $('#js-search-term').val('${artist.name}');
-    
-//     page=1;
-    
-//     $('html, body').animate({
-//       scrollTop: $('body').offset().top
-//     }, 1200);
-
-//     getResults(query, page)
-//       .then(responseJson => {
-//         const startIndex = storeResults(responseJson.results.trackmatches.track);
-//         displayResults(responseJson.results.trackmatches.track, startIndex);
-//       });
-//   });
-// }
 
 function handleLoadMore() {
   $('#js-more-results').click(event => {
