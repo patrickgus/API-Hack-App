@@ -17,7 +17,8 @@ function displaySimilarArtists(responseJson) {
 
   responseJson.similarartists.artist.forEach(artist => {
     $('#js-similar-artists-list').append(
-      `<li><a href="javascript:getResults('${artist.name}', 1);$('#js-results-list').empty()">${artist.name}</a>`
+      `<li><a href="javascript:getResults('${artist.name}', 1);$('#js-results-list').empty();$('#js-search-term').val('${artist.name}');
+      page=1;$('html, body').animate({scrollTop: $('body').offset().top}, 1200);">${artist.name}</a>`
     );
   });
 }
@@ -73,7 +74,7 @@ function displayLyrics(responseJson, index) {
 
   $('#js-similar-artists-list').empty();
 
-  $('html, body').animate({
+  $('html, body').animate( {
     scrollTop: $('#js-lyrics').offset().top
   }, 800);
 
