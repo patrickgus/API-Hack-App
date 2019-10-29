@@ -74,7 +74,7 @@ function displayLyrics(responseJson, index) {
 
   $('#js-similar-artists-list').empty();
 
-  $('html, body').animate( {
+  $('html, body').animate({
     scrollTop: $('#js-lyrics').offset().top
   }, 800);
 
@@ -195,11 +195,10 @@ function handleSearch() {
   $('form').submit(event => {
     event.preventDefault();
 
-    STORE.tracks.length = 0;
     $('#js-results-list').empty();
-
-    const searchTerm = $('#js-search-term').val();
+    STORE.tracks.length = 0;
     page = 1;
+    const searchTerm = $('#js-search-term').val();
 
     getResults(searchTerm, page);
   });
