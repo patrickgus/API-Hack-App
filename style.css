@@ -136,3 +136,13 @@ button:hover {
   margin-top: 15px;
   line-height: 1.25;
 }
+
+@media screen and (max-width: 350px) {
+  label {
+    max-width: 236px;
+  }
+
+  #js-search-term {
+    max-width: 240px;
+  }
+}
