@@ -5,7 +5,8 @@
 body {
   font-family: 'Nunito', sans-serif;
   color: rgb(255, 255, 255);
-  background: url(https://wallpapermemory.com/uploads/717/geometry-background-hd-1920x1200-116795.jpg) no-repeat center center fixed; 
+  background: url(https://wallpapermemory.com/uploads/717/geometry-background-hd-1920x1200-116795.jpg) no-repeat center
+    center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -27,6 +28,9 @@ img {
 
 main {
   margin: 20px 15px;
+  padding: 5px 10px;
+  background: rgb(40, 30, 30, 0.8);
+  border-radius: 10px;
 }
 
 h1 {
@@ -44,8 +48,7 @@ h3 {
 }
 
 form {
-  background: rgb(40, 30, 30, 0.9);
-  border-radius: 12px;
+  margin: 0 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,14 +66,14 @@ a {
   color: rgb(255, 255, 255);
 }
 
-a:hover{
+a:hover {
   cursor: pointer;
   color: rgb(224, 224, 224);
 }
 
 button {
   margin-top: 10px;
-  background-color: rgb(33,136,167);
+  background-color: rgb(33, 136, 167);
   color: black;
   border: 2px outset rgb(35, 155, 192);
   border-radius: 5px;
@@ -86,7 +89,7 @@ button:hover {
 
 .button {
   margin: 15px;
-  background-color: rgb(33,136,167);
+  background-color: rgb(33, 136, 167);
   color: black;
   border: 2px outset rgb(35, 155, 192);
   border-radius: 5px;
