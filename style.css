@@ -28,7 +28,7 @@ img {
 
 main {
   margin: 20px 15px;
-  padding: 5px 10px;
+  padding: 12px;
   background: rgb(40, 30, 30, 0.8);
   border-radius: 10px;
 }
@@ -40,11 +40,14 @@ h1 {
 h2 {
   font-size: 20px;
   font-weight: bold;
-  margin: 10px 0;
+  margin: 40px 0 20px 0;
+  text-align: center;
 }
 
 h3 {
+  font-size: 18px;
   font-weight: bold;
+  margin: 20px 0;
 }
 
 form {
@@ -74,12 +77,13 @@ a:hover {
 button {
   margin-top: 10px;
   background-color: rgb(33, 136, 167);
-  color: black;
+  color: white;
   border: 2px outset rgb(35, 155, 192);
   border-radius: 5px;
   font-size: 14px;
-  font-weight: bold;
   font-family: 'Nunito', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 button:hover {
@@ -90,12 +94,13 @@ button:hover {
 .button {
   margin: 15px;
   background-color: rgb(33, 136, 167);
-  color: black;
+  color: white;
   border: 2px outset rgb(35, 155, 192);
   border-radius: 5px;
   font-size: 14px;
-  font-weight: bold;
   font-family: 'Nunito', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .button:hover {
@@ -107,11 +112,20 @@ button:hover {
   display: none;
 }
 
+.align-center {
+  text-align: center;
+}
+
+.back-to-results {
+  margin-top: 15px;
+}
+
 #js-search-term {
   width: 283px;
   height: 25px;
   border: solid 1px rgb(40, 30, 30, 0.9);
   border-radius: 5px;
+  padding: 5px;
 }
 
 #js-lyrics {
