@@ -19,7 +19,7 @@ function displaySimilarArtists(responseJson) {
     $('#js-similar-artists-list').append(
       `<li><a href="javascript:
       $('#js-results-list').empty();
-      $('#js-search-term').val('${artist.name}');
+      $('#js-search-term').val('${fixedEncodeURIComponent(artist.name)}');
       
       STORE.tracks = [];
       page=1;
@@ -28,7 +28,7 @@ function displaySimilarArtists(responseJson) {
         scrollTop: $('body').offset().top
       }, 1200);
   
-      getResults('${artist.name}', page)
+      getResults('${fixedEncodeURIComponent(artist.name)}', page)
         .then(responseJson => {
           const startIndex = storeResults(responseJson.results.trackmatches.track);
           displayResults(responseJson.results.trackmatches.track, startIndex);
