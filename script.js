@@ -64,20 +64,6 @@ function getSimilarArtists(index) {
     });
 }
 
-function handleBackToResults() {
-  $('#back-to-results').click(event => {
-    $('#js-lyrics').hide();
-
-    $('#js-similar-artists').hide();
-
-    $('#js-results').show();
-
-    $('html, body').animate({
-      scrollTop: $('#js-more-results').offset().top
-    }, 800);
-  });
-}
-
 function displayLyrics(responseJson, index) {
   console.log(responseJson);
 
@@ -103,9 +89,8 @@ function displayLyrics(responseJson, index) {
         <p class="lyrics">${responseJson.lyrics.replace(/\n/g, '<br>')}</p>`
     );
   }
-  $('#js-lyrics').append('<button id="back-to-results">Back to results</button>');
+  $('#back-to-results').show();
 
-  handleBackToResults();
   getSimilarArtists(index);
 }
 
@@ -123,7 +108,15 @@ function getLyrics(index) {
     })
     .then(responseJson => displayLyrics(responseJson, index))
     .catch(err => {
-      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+      $('#js-results').hide();
+      
+      $('#js-error-message').show();
+
+      $('#back-to-results').show();
+
+      $('#js-error-message').text('No lyrics found. Please try another search.');
+      
+      console.log(`Something went wrong: ${err.message}`);
     });
 }
 
@@ -135,6 +128,7 @@ function displayResults(results, startIndex) {
   console.log(STORE);
   $('#js-lyrics').empty();
   $('#js-similar-artists').hide();
+  $('#back-to-results').hide();
 
   if (results.length) {
     results.forEach((track, index) => {
@@ -192,8 +186,30 @@ function getResults(query, page) {
       throw new Error(response.statusText);
     })
     .catch(err => {
+      $('#js-results').hide();
+      
+      $('#js-error-message').show();
+      
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
+}
+
+function handleBackToResults() {
+  $('#back-to-results').click(event => {
+    $('#js-error-message').hide();
+    
+    $('#js-lyrics').hide();
+
+    $('#back-to-results').hide();
+
+    $('#js-similar-artists').hide();
+
+    $('#js-results').show();
+
+    $('html, body').animate({
+      scrollTop: $('#js-more-results').offset().top
+    }, 800);
+  });
 }
 
 function handleLoadMore() {
@@ -228,4 +244,5 @@ function handleSearch() {
 $(function() {
   handleSearch();
   handleLoadMore();
+  handleBackToResults();
 });
