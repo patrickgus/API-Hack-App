@@ -26,7 +26,7 @@ img {
 }
 
 main {
-  margin: 0 15px;
+  margin: 20px 15px;
 }
 
 h1 {
@@ -59,12 +59,45 @@ ul {
   line-height: 1.5;
 }
 
+a {
+  color: rgb(255, 255, 255);
+}
+
+a:hover{
+  cursor: pointer;
+  color: rgb(224, 224, 224);
+}
+
 button {
   margin-top: 10px;
+  background-color: rgb(33,136,167);
+  color: black;
+  border: 2px outset rgb(35, 155, 192);
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Nunito', sans-serif;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: rgb(25, 101, 124);
 }
 
 .button {
   margin: 15px;
+  background-color: rgb(33,136,167);
+  color: black;
+  border: 2px outset rgb(35, 155, 192);
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Nunito', sans-serif;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: rgb(25, 101, 124);
 }
 
 .hidden {
@@ -73,6 +106,9 @@ button {
 
 #js-search-term {
   width: 283px;
+  height: 25px;
+  border: solid 1px rgb(40, 30, 30, 0.9);
+  border-radius: 5px;
 }
 
 #js-lyrics {
