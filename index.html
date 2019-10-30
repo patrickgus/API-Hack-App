@@ -16,7 +16,7 @@
     <main>
       <form id="js-form">
         <label for="js-search-term">Enter the name of an artist or song title: </label>
-        <input type="text" name="search-term" placeholder="Search..." id="js-search-term" value="green day" required />
+        <input type="text" name="search-term" placeholder="Search..." id="js-search-term" required />
 
         <input type="submit" class="button" value="Search" />
       </form>
@@ -28,7 +28,11 @@
         <ul id="js-results-list"></ul>
         <button id="js-more-results" class="hidden">See More...</button>
       </section>
+
       <section id="js-lyrics" class="hidden"></section>
+
+      <button id="back-to-results" class="hidden">Back to results</button>
+
       <section id="js-similar-artists" class="hidden">
         <h3>Similar Artists</h3>
         <ul id="js-similar-artists-list"></ul>
