@@ -152,3 +152,9 @@ button:hover {
     max-width: 240px;
   }
 }
+
+@media screen and (min-width: 550px) {
+  main {
+    margin: 80px;
+  }
+}
