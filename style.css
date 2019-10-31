@@ -118,6 +118,10 @@ button:hover {
   align-items: center;
 }
 
+.error-message {
+  text-align: center;
+}
+
 .align-center {
   text-align: center;
 }
