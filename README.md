@@ -8,6 +8,6 @@ It makes calls to the LastFM and lyrics.ovh APIs.
 
 ![image](https://user-images.githubusercontent.com/53308172/67908455-cdbd8200-fb38-11e9-8a0a-03fb295e4cbe.png)
 
-![image](https://user-images.githubusercontent.com/53308172/67908526-08271f00-fb39-11e9-8be8-997aa49ea6ab.png)
+![image](https://user-images.githubusercontent.com/53308172/67908822-31947a80-fb3a-11e9-9d07-f1b6da44f5d0.png)
 
 ![image](https://user-images.githubusercontent.com/53308172/67908563-2b51ce80-fb39-11e9-91ee-f35fece07675.png)
