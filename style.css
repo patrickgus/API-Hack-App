@@ -29,7 +29,7 @@ img {
 main {
   margin: 30px;
   padding: 20px;
-  background: rgb(40, 30, 30, 0.8);
+  background: rgba(40, 30, 30, 0.8);
   border-radius: 10px;
 }
 
@@ -133,7 +133,7 @@ button:hover {
 #js-search-term {
   width: 283px;
   height: 25px;
-  border: solid 1px rgb(40, 30, 30, 0.9);
+  border: solid 1px rgba(40, 30, 30, 0.9);
   border-radius: 5px;
   padding: 5px;
 }
