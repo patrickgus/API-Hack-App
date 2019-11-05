@@ -6,7 +6,7 @@ In addition to displaying the lyrics, it shows a list of similar artists and a l
 The technologies that are used include HTML, CSS, Javascript, and jQuery.
 It makes calls to the LastFM and lyrics.ovh APIs.
 
-[Live Page](https://patrickgus.github.io/API-Hack-App/)
+[Live Page](https://patrickgus.github.io/Lyrics-4-Me/)
 
 ![image](https://user-images.githubusercontent.com/53308172/67908455-cdbd8200-fb38-11e9-8a0a-03fb295e4cbe.png)
 
