@@ -12,7 +12,6 @@ function formatQueryParams(params) {
 }
 
 function displaySimilarArtists(responseJson) {
-  console.log(responseJson);
   $('#js-similar-artists').show();
 
   responseJson.similarartists.artist.forEach(artist => {
@@ -49,8 +48,6 @@ function getSimilarArtists(index) {
   const queryString = formatQueryParams(params);
   const url = lastFmSearchUrl + '?' + queryString;
 
-  console.log(url);
-
   fetch(url)
     .then(response => {
       if (response.ok) {
@@ -65,8 +62,6 @@ function getSimilarArtists(index) {
 }
 
 function displayLyrics(responseJson, index) {
-  console.log(responseJson);
-
   $('#js-results').hide();
 
   $('#js-lyrics').show();
@@ -97,8 +92,6 @@ function displayLyrics(responseJson, index) {
 function getLyrics(index) {
   const url = lyricsSearchUrl + fixedEncodeURIComponent(STORE.tracks[index].artist) + '/' + fixedEncodeURIComponent(STORE.tracks[index].name);
 
-  console.log(url);
-
   fetch(url)
     .then(response => {
       if (response.ok) {
@@ -125,9 +118,10 @@ function fixedEncodeURIComponent(str) {
 }
 
 function displayResults(results, startIndex) {
-  console.log(STORE);
   $('#js-lyrics').empty();
+
   $('#js-similar-artists').hide();
+  
   $('#back-to-results').hide();
 
   if (results.length) {
@@ -175,8 +169,6 @@ function getResults(query, page) {
   };
   const queryString = formatQueryParams(params);
   const url = lastFmSearchUrl + '?' + queryString;
-
-  console.log(url);
 
   return fetch(url)
     .then(response => {
